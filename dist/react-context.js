@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -148,76 +148,6 @@ var keyMap = exports.keyMap = function keyMap(keys) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _utils = __webpack_require__(1);
-
-var utils = _interopRequireWildcard(_utils);
-
-var _contextTypes = __webpack_require__(3);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-exports.default = function (input, prefix) {
-  var normalized = (0, _contextTypes.normalize)(input);
-  var keys = Object.keys(normalized);
-
-  var contextTypes = prefix ? (0, _contextTypes.namespace)(normalized, prefix) : normalized;
-
-  return function (WrappedComponent) {
-    var _class, _temp;
-
-    return _temp = _class = function (_Component) {
-      _inherits(SetContext, _Component);
-
-      function SetContext() {
-        _classCallCheck(this, SetContext);
-
-        return _possibleConstructorReturn(this, (SetContext.__proto__ || Object.getPrototypeOf(SetContext)).apply(this, arguments));
-      }
-
-      _createClass(SetContext, [{
-        key: 'getChildContext',
-        value: function getChildContext() {
-          var props = utils.pick(this.props, keys);
-
-          return prefix ? (0, _contextTypes.namespace)(props, prefix) : props;
-        }
-      }, {
-        key: 'render',
-        value: function render() {
-          return _react2.default.createElement(WrappedComponent, this.props);
-        }
-      }]);
-
-      return SetContext;
-    }(_react.Component), _class.childContextTypes = contextTypes, _temp;
-  };
-};
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 exports.extract = exports.namespace = exports.normalize = undefined;
 
 var _react = __webpack_require__(0);
@@ -260,6 +190,66 @@ var extract = exports.extract = function extract(contextTypes, prefix) {
 };
 
 /***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _contextTypes = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+exports.default = function (input, prefix) {
+  var normalized = (0, _contextTypes.normalize)(input);
+  var contextTypes = prefix ? (0, _contextTypes.namespace)(normalized, prefix) : normalized;
+
+  return function (WrappedComponent) {
+    var _class, _temp;
+
+    return _temp = _class = function (_Component) {
+      _inherits(Context, _Component);
+
+      function Context() {
+        _classCallCheck(this, Context);
+
+        return _possibleConstructorReturn(this, (Context.__proto__ || Object.getPrototypeOf(Context)).apply(this, arguments));
+      }
+
+      _createClass(Context, [{
+        key: 'render',
+        value: function render() {
+          // TODO memoize extract?
+          var context = prefix ? (0, _contextTypes.extract)(this.context, prefix) : this.context;
+
+          return _react2.default.createElement(WrappedComponent, _extends({}, context, this.props));
+        }
+      }]);
+
+      return Context;
+    }(_react.Component), _class.contextTypes = contextTypes, _temp;
+  };
+};
+
+/***/ },
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -280,7 +270,78 @@ var _utils = __webpack_require__(1);
 
 var utils = _interopRequireWildcard(_utils);
 
-var _setContext = __webpack_require__(2);
+var _contextTypes = __webpack_require__(2);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+exports.default = function (input, prefix) {
+  var normalized = (0, _contextTypes.normalize)(input);
+  var contextTypes = prefix ? (0, _contextTypes.namespace)(normalized, prefix) : normalized;
+
+  // Keys of props to pull from context
+  var keys = Object.keys(normalized);
+
+  return function (WrappedComponent) {
+    var _class, _temp;
+
+    return _temp = _class = function (_Component) {
+      _inherits(SetContext, _Component);
+
+      function SetContext() {
+        _classCallCheck(this, SetContext);
+
+        return _possibleConstructorReturn(this, (SetContext.__proto__ || Object.getPrototypeOf(SetContext)).apply(this, arguments));
+      }
+
+      _createClass(SetContext, [{
+        key: 'getChildContext',
+        value: function getChildContext() {
+          var props = utils.pick(this.props, keys);
+
+          return prefix ? (0, _contextTypes.namespace)(props, prefix) : props;
+        }
+      }, {
+        key: 'render',
+        value: function render() {
+          return _react2.default.createElement(WrappedComponent, this.props);
+        }
+      }]);
+
+      return SetContext;
+    }(_react.Component), _class.childContextTypes = contextTypes, _temp;
+  };
+};
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utils = __webpack_require__(1);
+
+var utils = _interopRequireWildcard(_utils);
+
+var _setContext = __webpack_require__(4);
 
 var _setContext2 = _interopRequireDefault(_setContext);
 
@@ -358,66 +419,6 @@ var ContextProvider = function (_Component) {
 exports.default = ContextProvider;
 
 /***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _contextTypes = __webpack_require__(3);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-exports.default = function (input, prefix) {
-  var normalized = (0, _contextTypes.normalize)(input);
-  var contextTypes = prefix ? (0, _contextTypes.namespace)(normalized, prefix) : normalized;
-
-  return function (WrappedComponent) {
-    var _class, _temp;
-
-    return _temp = _class = function (_Component) {
-      _inherits(Context, _Component);
-
-      function Context() {
-        _classCallCheck(this, Context);
-
-        return _possibleConstructorReturn(this, (Context.__proto__ || Object.getPrototypeOf(Context)).apply(this, arguments));
-      }
-
-      _createClass(Context, [{
-        key: 'render',
-        value: function render() {
-          // TODO memoize extract
-          var context = prefix ? (0, _contextTypes.extract)(this.context, prefix) : this.context;
-
-          return _react2.default.createElement(WrappedComponent, _extends({}, context, this.props));
-        }
-      }]);
-
-      return Context;
-    }(_react.Component), _class.contextTypes = contextTypes, _temp;
-  };
-};
-
-/***/ },
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -427,25 +428,160 @@ exports.default = function (input, prefix) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ContextProvider = exports.setContext = exports.context = undefined;
 
-var _context2 = __webpack_require__(5);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utils = __webpack_require__(1);
+
+var utils = _interopRequireWildcard(_utils);
+
+var _contextTypes = __webpack_require__(2);
+
+var _context = __webpack_require__(3);
+
+var _context2 = _interopRequireDefault(_context);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var warnedChildCount = false;
+
+var MapContextToProps = function (_Component) {
+  _inherits(MapContextToProps, _Component);
+
+  function MapContextToProps(props) {
+    _classCallCheck(this, MapContextToProps);
+
+    var _this = _possibleConstructorReturn(this, (MapContextToProps.__proto__ || Object.getPrototypeOf(MapContextToProps)).call(this));
+
+    _this.state = _this.buildState(props);
+    return _this;
+  }
+
+  _createClass(MapContextToProps, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      this.setState(this.buildState(nextProps));
+    }
+  }, {
+    key: 'buildState',
+    value: function buildState(props) {
+      return { WrappedComponent: this.createWrappedComponent(props) };
+    }
+  }, {
+    key: 'createWrappedComponent',
+    value: function createWrappedComponent(props) {
+      var spec = props.childContextTypes || Object.keys(utils.omit(props, ['children', 'childContextTypes', 'contextNamespace']));
+      var keys = Object.keys((0, _contextTypes.normalize)(spec));
+
+      var WrappedComponent = function (_Component2) {
+        _inherits(WrappedComponent, _Component2);
+
+        function WrappedComponent(childProps) {
+          _classCallCheck(this, WrappedComponent);
+
+          var _this2 = _possibleConstructorReturn(this, (WrappedComponent.__proto__ || Object.getPrototypeOf(WrappedComponent)).call(this));
+
+          _this2.state = _this2.buildState(childProps);
+          return _this2;
+        }
+
+        _createClass(WrappedComponent, [{
+          key: 'componentWillReceiveProps',
+          value: function componentWillReceiveProps(nextChildProps) {
+            this.setState(this.buildState(nextChildProps));
+          }
+        }, {
+          key: 'buildState',
+          value: function buildState(childProps) {
+            return { childContextProps: utils.pick(childProps, keys) };
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            var children = this.props.children;
+            var childContextProps = this.state.childContextProps;
+
+
+            if (_react.Children.count(children) !== 1) {
+              if (!warnedChildCount) {
+                warnedChildCount = true;
+
+                console.warn('Must return exactly 1 child from MapContextToProps');
+              }
+
+              return null;
+            }
+
+            return (0, _react.cloneElement)(_react.Children.only(children), childContextProps);
+          }
+        }]);
+
+        return WrappedComponent;
+      }(_react.Component);
+
+      return (0, _context2.default)(spec, props.contextNamespace)(WrappedComponent);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var WrappedComponent = this.state.WrappedComponent;
+
+
+      return _react2.default.createElement(WrappedComponent, this.props);
+    }
+  }]);
+
+  return MapContextToProps;
+}(_react.Component);
+
+exports.default = MapContextToProps;
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MapContextToProps = exports.ContextProvider = exports.setContext = exports.context = undefined;
+
+var _context2 = __webpack_require__(3);
 
 var _context3 = _interopRequireDefault(_context2);
 
-var _setContext2 = __webpack_require__(2);
+var _setContext2 = __webpack_require__(4);
 
 var _setContext3 = _interopRequireDefault(_setContext2);
 
-var _ContextProvider2 = __webpack_require__(4);
+var _ContextProvider2 = __webpack_require__(5);
 
 var _ContextProvider3 = _interopRequireDefault(_ContextProvider2);
+
+var _MapContextToProps2 = __webpack_require__(6);
+
+var _MapContextToProps3 = _interopRequireDefault(_MapContextToProps2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.context = _context3.default;
 exports.setContext = _setContext3.default;
 exports.ContextProvider = _ContextProvider3.default;
+exports.MapContextToProps = _MapContextToProps3.default;
 
 /***/ }
 /******/ ]);
