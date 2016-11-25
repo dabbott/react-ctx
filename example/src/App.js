@@ -2,8 +2,11 @@ import React, { Component, PropTypes } from 'react'
 
 import { context, setContext, ContextProvider } from '../dist/react-context'
 
+// textDecoration should apply, fontSize shouldn't
 const Text = context(
-  ['color', 'fontSize', 'textDecoration']
+  ['fontSize', 'textDecoration'], 'yolo'
+)(context(
+  ['color'], 'namespace'
 )(class extends Component {
   render() {
     const {color, fontSize, textDecoration} = this.props
@@ -15,8 +18,9 @@ const Text = context(
       </div>
     )
   }
-})
+}))
 
+// Shouldn't be colored, since color is namespaced
 const TextWithContextTypes = context(
   {color: PropTypes.string, fontSize: PropTypes.number, textDecoration: PropTypes.string}
 )(class extends Component {
@@ -32,7 +36,7 @@ const TextWithContextTypes = context(
   }
 })
 
-const Setter = setContext(['color'])(class extends Component {
+const Setter = setContext(['color'], 'namespace')(class extends Component {
   render() {
     return (
       <div>
@@ -48,9 +52,10 @@ class App extends Component {
       <ContextProvider
         textDecoration={'underline'}
         childContextTypes={{textDecoration: PropTypes.string}}
+        contextNamespace={'yolo'}
       >
         <ContextProvider fontSize={100}>
-          <Setter color='teal'>
+          <Setter color={'teal'}>
             <Text>Hola</Text>
             <TextWithContextTypes>World</TextWithContextTypes>
           </Setter>

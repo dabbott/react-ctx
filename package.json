@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "rimraf lib",
     "build": "babel src --out-dir lib",
-    "dist": "webpack && cp -rf ./dist example/dist",
+    "dist": "webpack && rimraf ./example/dist && cp -rf ./dist ./example/dist",
     "watch": "babel src --out-dir lib --source-maps inline --watch",
     "lint": "eslint src",
     "test": "mocha --compilers js:babel/register --recursive src/**/*-test.js",

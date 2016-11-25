@@ -28,10 +28,10 @@ export default class ContextProvider extends Component {
 
     const spec = (
       props.childContextTypes ||
-      Object.keys(utils.omit(props, ['children', 'childContextTypes']))
+      Object.keys(utils.omit(props, ['children', 'childContextTypes', 'contextNamespace']))
     )
 
-    return setContext(spec)(WrappedComponent)
+    return setContext(spec, props.contextNamespace)(WrappedComponent)
   }
 
   render() {

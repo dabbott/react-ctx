@@ -1,17 +1,22 @@
 import React, { Component } from 'react'
 
 import * as utils from '../utils'
-import normalizeSpec from '../utils/normalizeSpec'
+import { normalize, namespace } from '../utils/contextTypes'
 
-export default (input) => {
-  const spec = normalizeSpec(input)
-  const keys = Object.keys(spec)
+export default (input, prefix) => {
+  const normalized = normalize(input)
+  const contextTypes = prefix ? namespace(normalized, prefix) : normalized
+
+  // Keys of props to pull from context
+  const keys = Object.keys(normalized)
 
   return WrappedComponent => class SetContext extends Component {
-    static childContextTypes = spec
+    static childContextTypes = contextTypes
 
     getChildContext() {
-      return utils.pick(this.props, keys)
+      const props = utils.pick(this.props, keys)
+
+      return prefix ? namespace(props, prefix) : props
     }
 
     render() {

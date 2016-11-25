@@ -24,6 +24,12 @@ export const mapValues = (original, f) =>
     return created
   }, {})
 
+export const mapKeys = (original, f) =>
+  Object.keys(original).reduce((created, key) => {
+    created[f(key)] = original[key]
+    return created
+  }, {})
+
 export const keyMap = keys =>
   keys.reduce((created, key) => {
     created[key] = key

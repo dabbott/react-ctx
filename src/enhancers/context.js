@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
 
-import normalizeSpec from '../utils/normalizeSpec'
+import { normalize, namespace, extract } from '../utils/contextTypes'
 
-export default (input) => {
-  const spec = normalizeSpec(input)
+export default (input, prefix) => {
+  const normalized = normalize(input)
+  const contextTypes = prefix ? namespace(normalized, prefix) : normalized
 
   return WrappedComponent => class Context extends Component {
-
-    static contextTypes = spec
+    static contextTypes = contextTypes
 
     render() {
+      // TODO memoize extract?
+      const context = prefix ? extract(this.context, prefix) : this.context
+
       return (
         <WrappedComponent
-          {...this.context}
+          {...context}
           {...this.props}
         />
       )
