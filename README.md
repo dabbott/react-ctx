@@ -3,129 +3,151 @@ react-ctx
 
 [![npm version](https://img.shields.io/npm/v/react-ctx.svg?style=flat-square)](https://www.npmjs.com/package/react-ctx)
 
-Higher order component for providing themes & styles to a React or React Native app.
+Higher order component for interacting with context
 
 ```js
 npm install --save react-ctx
 ```
 
-## Usage
+## Why?
 
-### Step 1: Provide the theme
+You're making a library and need to provide context to the component hierarchy. You don't want to use the context API directly, so you go with the `Provider`/`connect` pattern from `redux`. Then you realize you want to add more things to context, and... what if other libraries put something in context under the same key? You're bouncing back and forth between files for handling contextTypes and childContextTypes, which really aren't the purpose of your library. You don't want to worry about this, so you look for a simple wrapper and find `react-ctx`.
 
-Wrap the top level component, or any component whose descendants should be styled, in the `<StylesProvider>`. Pass a theme (an arbitrary value of your choosing) to this provider, which will be used to build styles.
-
-The theme can be changed at any time and the styles will be recomputed for your entire app - but don't worry, styles are memoized per theme (themes are compared with `===`), so there isn't a big performance impact due to recomputing styles.
+### Simple Usage
 
 ```js
 import React, { Component } from 'react'
-import { StylesProvider } from 'react-ctx'
+import { MapPropsToContext, MapContextToProps } from 'react-ctx'
 
-// Themes can be any value (object, array, function, whatever)
-const myTheme = {
-  colors: {
-    text: 'red',
-    background: 'blue',
-  },
-  fonts: {
-    regular: {
-      fontSize: 13,
-      fontFamily: "Helvetica",
-    }
-  }
-}
+const Text = ({foo}) => <div>{foo}</div>
 
-// Any children of App will be able to use the provided theme
 export default class App extends Component {
   render() {
-    <StylesProvider theme={myTheme}>
-      {this.props.children}
-    </StylesProvider>
+    return (
+      // foo is added to props
+      <MapPropsToContext foo={'bar'}>
+        {/* foo is pulled from context and passed to Text as a prop */}
+        <MapContextToProps foo>
+          <Text />
+        </MapContextToProps>
+      </MapPropsToContext>
+    )
   }
 }
 ```
 
-### Step 2: Create your styles
+### `Provider` / `connect`-style Usage
 
 ```js
 import React, { Component } from 'react'
-import { Text } from 'react-native'
-import { StylesEnhancer } from 'react-ctx'
+import { MapPropsToContext, context } from 'react-ctx'
 
-// This function will be called whenever the theme changes
-// to provide a `styles` prop to the component
-const stylesCreator = (theme) => {
-  const {colors, fonts} = theme
-
-  return {
-    main: {
-      color: colors.text,
-      ...fonts.regular,
-    },
-  }
+const contextTypes = {
+  foo: PropTypes.string,
 }
 
-// The prop `styles` will be available to this component,
-// containing the object returned from the stylesCreator
-@StylesEnhancer(stylesCreator)
-export default class Foo extends Component {
-  render() {
-    const {styles} = this.props
+const MyProvider = ({foo}) => <MapPropsToContext foo={foo} contextTypes={contextTypes} />
+const myConnect = () => context(contextTypes)
+```
 
-    return <Text style={styles.main} />
+### PropTypes
+
+You can use PropTypes for validation.
+
+```js
+import React, { Component, PropTypes } from 'react'
+import { MapPropsToContext, MapContextToProps } from 'react-ctx'
+
+const Text = ({foo}) => <div>{foo}</div>
+
+const contextTypes = {
+  foo: PropTypes.string,
+}
+
+export default class App extends Component {
+  render() {
+    return (
+      // foo is added to props and its type is checked
+      <MapPropsToContext
+        foo={'bar'}
+        contextTypes={contextTypes}
+      >
+        {/* all props described by contextTypes are grabbed from context and put into props */}
+        <MapContextToProps contextTypes={contextTypes}>
+          <Text />
+        </MapContextToProps>
+      </MapPropsToContext>
+    )
   }
 }
 ```
 
-## Other / Advanced Usage
-
-### Styles based on component `props`
+### Namespaces
 
 ```js
 import React, { Component } from 'react'
-import { Text } from 'react-native'
-import { StylesEnhancer } from 'react-ctx'
+import { MapPropsToContext, MapContextToProps } from 'react-ctx'
 
-const stylesCreator = (theme, data) => ({
-  main: {
-    color: data.type === 'main' ? 'green' : 'black',
-    fontSize: data.type === 'warning' ? theme.warning : theme.regular,
-  }
-})
+const Text = ({foo}) => <div>{foo}</div>
 
-// Select data from props to be passed to the stylesCreator.
-// The stylesCreator will only be called again if the object returned by this
-// function changes (determined by shallow equality comparison)
-const selectProps = (props) => ({
-  type: props.type,
-})
-
-@StylesEnhancer(stylesCreator, selectProps)
-export default class Foo extends Component {
+export default class App extends Component {
   render() {
-    const {styles} = this.props
-
-    return <Text style={styles.main} />
+    return (
+      // yolo.foo is added to context
+      <MapPropsToContext
+        foo={'bar'}
+        contextNamespace={'yolo'}
+      >
+        {/* yolo.foo is added to props as foo */}
+        <MapContextToProps
+          foo
+          contextNamespace={'yolo'}
+        >
+          <Text />
+        </MapContextToProps>
+      </MapPropsToContext>
+    )
   }
 }
 ```
 
-### Without Decorators
+### Wrapping Custom Components
 
 ```js
 import React, { Component } from 'react'
-import { Text } from 'react-native'
-import { StylesEnhancer } from 'react-ctx'
+import { context, setContext } from 'react-ctx'
 
-const stylesCreator = (theme) => { return ... }
+const contextTypes = {
+  foo: PropTypes.string,
+}
 
-class Foo extends Component {
+@setContext(contextTypes, 'namespace')
+class FooProvider extends Component {
   render() {
-    const {styles} = this.props
-
-    return <Text style={styles.main} />
+    return (
+      <div>
+        {this.props.children}
+      </div>
+    )
   }
 }
 
-export default StylesEnhancer(stylesCreator)(Foo)
+@context(contextTypes, 'namespace')
+class Text extends Component {
+  render() {
+    return <div>{this.props.foo}</div>
+  }
+}
+
+export default class App extends Component {
+  render() {
+    return (
+      // namespace.foo is added to context
+      <FooProvider foo={'bar'}>
+        {/* namespace.foo is added to props as foo */}
+        <Text />
+      </FooProvider>
+    )
+  }
+}
 ```

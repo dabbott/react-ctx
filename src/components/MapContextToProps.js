@@ -13,7 +13,7 @@ const createInnerComponent = (props) => {
   )
   const keys = Object.keys(normalize(spec))
 
-  class WrappedComponent extends Component {
+  class MapContextToPropsInner extends Component {
 
     constructor(childProps) {
       super()
@@ -47,7 +47,7 @@ const createInnerComponent = (props) => {
     }
   }
 
-  return context(spec, props.contextNamespace)(WrappedComponent)
+  return context(spec, props.contextNamespace)(MapContextToPropsInner)
 }
 
 export default class MapContextToProps extends Component {
@@ -67,10 +67,11 @@ export default class MapContextToProps extends Component {
   }
 
   render() {
+    const {children} = this.props
     const {WrappedComponent} = this.state
 
     return (
-      <WrappedComponent {...this.props} />
+      <WrappedComponent children={children} />
     )
   }
 }

@@ -363,19 +363,19 @@ var createInnerComponent = function createInnerComponent(props) {
   var spec = props.contextTypes || Object.keys(utils.omit(props, ['children', 'contextTypes', 'contextNamespace']));
   var keys = Object.keys((0, _contextTypes.normalize)(spec));
 
-  var WrappedComponent = function (_Component) {
-    _inherits(WrappedComponent, _Component);
+  var MapContextToPropsInner = function (_Component) {
+    _inherits(MapContextToPropsInner, _Component);
 
-    function WrappedComponent(childProps) {
-      _classCallCheck(this, WrappedComponent);
+    function MapContextToPropsInner(childProps) {
+      _classCallCheck(this, MapContextToPropsInner);
 
-      var _this = _possibleConstructorReturn(this, (WrappedComponent.__proto__ || Object.getPrototypeOf(WrappedComponent)).call(this));
+      var _this = _possibleConstructorReturn(this, (MapContextToPropsInner.__proto__ || Object.getPrototypeOf(MapContextToPropsInner)).call(this));
 
       _this.state = _this.buildState(childProps);
       return _this;
     }
 
-    _createClass(WrappedComponent, [{
+    _createClass(MapContextToPropsInner, [{
       key: 'componentWillReceiveProps',
       value: function componentWillReceiveProps(nextChildProps) {
         this.setState(this.buildState(nextChildProps));
@@ -406,10 +406,10 @@ var createInnerComponent = function createInnerComponent(props) {
       }
     }]);
 
-    return WrappedComponent;
+    return MapContextToPropsInner;
   }(_react.Component);
 
-  return (0, _context2.default)(spec, props.contextNamespace)(WrappedComponent);
+  return (0, _context2.default)(spec, props.contextNamespace)(MapContextToPropsInner);
 };
 
 var MapContextToProps = function (_Component2) {
@@ -437,10 +437,11 @@ var MapContextToProps = function (_Component2) {
   }, {
     key: 'render',
     value: function render() {
+      var children = this.props.children;
       var WrappedComponent = this.state.WrappedComponent;
 
 
-      return _react2.default.createElement(WrappedComponent, this.props);
+      return _react2.default.createElement(WrappedComponent, { children: children });
     }
   }]);
 

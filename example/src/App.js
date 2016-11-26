@@ -4,8 +4,6 @@ import { context, setContext, MapPropsToContext, MapContextToProps } from '../di
 
 // textDecoration should apply, fontSize shouldn't
 const Text = context(
-  ['fontStyle'], 'foo'
-)(context(
   ['fontSize', 'textDecoration'], 'yolo'
 )(context(
   ['color'], 'namespace'
@@ -20,7 +18,7 @@ const Text = context(
       </div>
     )
   }
-})))
+}))
 
 // Shouldn't be colored, since color is namespaced
 const TextWithContextTypes = context(
@@ -53,18 +51,15 @@ class App extends Component {
     return (
       <MapPropsToContext
         textDecoration={'underline'}
-        childContextTypes={{textDecoration: PropTypes.string}}
+        contextTypes={{textDecoration: PropTypes.string}}
         contextNamespace={'yolo'}
       >
         <MapPropsToContext fontSize={100}>
           <Setter color={'teal'}>
             <Text>Hola</Text>
             <TextWithContextTypes>World</TextWithContextTypes>
-            <MapPropsToContext fontStyle={'italic'} contextNamespace={'foo'}>
-              <MapContextToProps
-                childContextTypes={['fontStyle']}
-                contextNamespace={'foo'}
-              >
+            <MapPropsToContext fontStyle={'italic'}>
+              <MapContextToProps fontStyle>
                 <Text>Foo</Text>
               </MapContextToProps>
             </MapPropsToContext>
