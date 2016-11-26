@@ -2,8 +2,8 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: './dist',
-    filename: 'react-context.js',
-    library: 'react-context',
+    filename: 'react-context-provider.js',
+    library: 'react-context-provider',
     libraryTarget: 'umd',
   },
   module: {

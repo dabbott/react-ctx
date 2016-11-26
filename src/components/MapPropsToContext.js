@@ -5,8 +5,8 @@ import setContext from '../enhancers/setContext'
 
 const createInnerComponent = (props) => {
   const spec = (
-    props.childContextTypes ||
-    Object.keys(utils.omit(props, ['children', 'childContextTypes', 'contextNamespace']))
+    props.contextTypes ||
+    Object.keys(utils.omit(props, ['children', 'contextTypes', 'contextNamespace']))
   )
 
   class MapPropsToContextInner extends Component {

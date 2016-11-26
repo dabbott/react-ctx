@@ -1,12 +1,12 @@
-react-context
+react-context-provider
 =====================
 
-[![npm version](https://img.shields.io/npm/v/react-context.svg?style=flat-square)](https://www.npmjs.com/package/react-context)
+[![npm version](https://img.shields.io/npm/v/react-context-provider.svg?style=flat-square)](https://www.npmjs.com/package/react-context-provider)
 
 Higher order component for providing themes & styles to a React or React Native app.
 
 ```js
-npm install --save react-context
+npm install --save react-context-provider
 ```
 
 ## Usage
@@ -19,7 +19,7 @@ The theme can be changed at any time and the styles will be recomputed for your 
 
 ```js
 import React, { Component } from 'react'
-import { StylesProvider } from 'react-context'
+import { StylesProvider } from 'react-context-provider'
 
 // Themes can be any value (object, array, function, whatever)
 const myTheme = {
@@ -50,7 +50,7 @@ export default class App extends Component {
 ```js
 import React, { Component } from 'react'
 import { Text } from 'react-native'
-import { StylesEnhancer } from 'react-context'
+import { StylesEnhancer } from 'react-context-provider'
 
 // This function will be called whenever the theme changes
 // to provide a `styles` prop to the component
@@ -84,7 +84,7 @@ export default class Foo extends Component {
 ```js
 import React, { Component } from 'react'
 import { Text } from 'react-native'
-import { StylesEnhancer } from 'react-context'
+import { StylesEnhancer } from 'react-context-provider'
 
 const stylesCreator = (theme, data) => ({
   main: {
@@ -115,7 +115,7 @@ export default class Foo extends Component {
 ```js
 import React, { Component } from 'react'
 import { Text } from 'react-native'
-import { StylesEnhancer } from 'react-context'
+import { StylesEnhancer } from 'react-context-provider'
 
 const stylesCreator = (theme) => { return ... }
 

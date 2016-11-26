@@ -1,6 +1,6 @@
 {
-  "name": "react-context",
-  "version": "0.0.1",
+  "name": "react-context-provider",
+  "version": "0.1.0",
   "description": "Higher order component wrappers for providing context",
   "main": "lib/index.js",
   "files": [
@@ -25,12 +25,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dabbott/react-context.git"
+    "url": "https://github.com/dabbott/react-context-provider.git"
   },
   "bugs": {
-    "url": "https://github.com/dabbott/react-context/issues"
+    "url": "https://github.com/dabbott/react-context-provider/issues"
   },
-  "homepage": "https://github.com/dabbott/react-context",
+  "homepage": "https://github.com/dabbott/react-context-provider",
   "dependencies": {},
   "peerDependencies": {
     "react": "14.X.X || 15.X.X"

@@ -8,8 +8,8 @@ let warnedChildCount = false
 
 const createInnerComponent = (props) => {
   const spec = (
-    props.childContextTypes ||
-    Object.keys(utils.omit(props, ['children', 'childContextTypes', 'contextNamespace']))
+    props.contextTypes ||
+    Object.keys(utils.omit(props, ['children', 'contextTypes', 'contextNamespace']))
   )
   const keys = Object.keys(normalize(spec))
 
