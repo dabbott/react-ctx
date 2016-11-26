@@ -341,9 +341,11 @@ var _utils = __webpack_require__(1);
 
 var utils = _interopRequireWildcard(_utils);
 
-var _setContext = __webpack_require__(4);
+var _contextTypes = __webpack_require__(2);
 
-var _setContext2 = _interopRequireDefault(_setContext);
+var _context = __webpack_require__(3);
+
+var _context2 = _interopRequireDefault(_context);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -355,19 +357,74 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var ContextProvider = function (_Component) {
-  _inherits(ContextProvider, _Component);
+var warnedChildCount = false;
 
-  function ContextProvider(props) {
-    _classCallCheck(this, ContextProvider);
+var createInnerComponent = function createInnerComponent(props) {
+  var spec = props.childContextTypes || Object.keys(utils.omit(props, ['children', 'childContextTypes', 'contextNamespace']));
+  var keys = Object.keys((0, _contextTypes.normalize)(spec));
 
-    var _this = _possibleConstructorReturn(this, (ContextProvider.__proto__ || Object.getPrototypeOf(ContextProvider)).call(this));
+  var WrappedComponent = function (_Component) {
+    _inherits(WrappedComponent, _Component);
 
-    _this.state = _this.buildState(props);
-    return _this;
+    function WrappedComponent(childProps) {
+      _classCallCheck(this, WrappedComponent);
+
+      var _this = _possibleConstructorReturn(this, (WrappedComponent.__proto__ || Object.getPrototypeOf(WrappedComponent)).call(this));
+
+      _this.state = _this.buildState(childProps);
+      return _this;
+    }
+
+    _createClass(WrappedComponent, [{
+      key: 'componentWillReceiveProps',
+      value: function componentWillReceiveProps(nextChildProps) {
+        this.setState(this.buildState(nextChildProps));
+      }
+    }, {
+      key: 'buildState',
+      value: function buildState(childProps) {
+        return { childContextProps: utils.pick(childProps, keys) };
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        var children = this.props.children;
+        var childContextProps = this.state.childContextProps;
+
+
+        if (_react.Children.count(children) !== 1) {
+          if (!warnedChildCount) {
+            warnedChildCount = true;
+
+            console.warn('Must return exactly 1 child from MapContextToProps');
+          }
+
+          return null;
+        }
+
+        return (0, _react.cloneElement)(_react.Children.only(children), childContextProps);
+      }
+    }]);
+
+    return WrappedComponent;
+  }(_react.Component);
+
+  return (0, _context2.default)(spec, props.contextNamespace)(WrappedComponent);
+};
+
+var MapContextToProps = function (_Component2) {
+  _inherits(MapContextToProps, _Component2);
+
+  function MapContextToProps(props) {
+    _classCallCheck(this, MapContextToProps);
+
+    var _this2 = _possibleConstructorReturn(this, (MapContextToProps.__proto__ || Object.getPrototypeOf(MapContextToProps)).call(this));
+
+    _this2.state = _this2.buildState(props);
+    return _this2;
   }
 
-  _createClass(ContextProvider, [{
+  _createClass(MapContextToProps, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       this.setState(this.buildState(nextProps));
@@ -375,33 +432,7 @@ var ContextProvider = function (_Component) {
   }, {
     key: 'buildState',
     value: function buildState(props) {
-      return { WrappedComponent: this.createWrappedComponent(props) };
-    }
-  }, {
-    key: 'createWrappedComponent',
-    value: function createWrappedComponent(props) {
-      var WrappedComponent = function (_Component2) {
-        _inherits(WrappedComponent, _Component2);
-
-        function WrappedComponent() {
-          _classCallCheck(this, WrappedComponent);
-
-          return _possibleConstructorReturn(this, (WrappedComponent.__proto__ || Object.getPrototypeOf(WrappedComponent)).apply(this, arguments));
-        }
-
-        _createClass(WrappedComponent, [{
-          key: 'render',
-          value: function render() {
-            return this.props.children;
-          }
-        }]);
-
-        return WrappedComponent;
-      }(_react.Component);
-
-      var spec = props.childContextTypes || Object.keys(utils.omit(props, ['children', 'childContextTypes', 'contextNamespace']));
-
-      return (0, _setContext2.default)(spec, props.contextNamespace)(WrappedComponent);
+      return { WrappedComponent: createInnerComponent(props) };
     }
   }, {
     key: 'render',
@@ -413,10 +444,10 @@ var ContextProvider = function (_Component) {
     }
   }]);
 
-  return ContextProvider;
+  return MapContextToProps;
 }(_react.Component);
 
-exports.default = ContextProvider;
+exports.default = MapContextToProps;
 
 /***/ },
 /* 6 */
@@ -439,11 +470,9 @@ var _utils = __webpack_require__(1);
 
 var utils = _interopRequireWildcard(_utils);
 
-var _contextTypes = __webpack_require__(2);
+var _setContext = __webpack_require__(4);
 
-var _context = __webpack_require__(3);
-
-var _context2 = _interopRequireDefault(_context);
+var _setContext2 = _interopRequireDefault(_setContext);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -455,21 +484,44 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var warnedChildCount = false;
+var createInnerComponent = function createInnerComponent(props) {
+  var spec = props.childContextTypes || Object.keys(utils.omit(props, ['children', 'childContextTypes', 'contextNamespace']));
 
-var MapContextToProps = function (_Component) {
-  _inherits(MapContextToProps, _Component);
+  var MapPropsToContextInner = function (_Component) {
+    _inherits(MapPropsToContextInner, _Component);
 
-  function MapContextToProps(props) {
-    _classCallCheck(this, MapContextToProps);
+    function MapPropsToContextInner() {
+      _classCallCheck(this, MapPropsToContextInner);
 
-    var _this = _possibleConstructorReturn(this, (MapContextToProps.__proto__ || Object.getPrototypeOf(MapContextToProps)).call(this));
+      return _possibleConstructorReturn(this, (MapPropsToContextInner.__proto__ || Object.getPrototypeOf(MapPropsToContextInner)).apply(this, arguments));
+    }
 
-    _this.state = _this.buildState(props);
-    return _this;
+    _createClass(MapPropsToContextInner, [{
+      key: 'render',
+      value: function render() {
+        return this.props.children;
+      }
+    }]);
+
+    return MapPropsToContextInner;
+  }(_react.Component);
+
+  return (0, _setContext2.default)(spec, props.contextNamespace)(MapPropsToContextInner);
+};
+
+var MapPropsToContext = function (_Component2) {
+  _inherits(MapPropsToContext, _Component2);
+
+  function MapPropsToContext(props) {
+    _classCallCheck(this, MapPropsToContext);
+
+    var _this2 = _possibleConstructorReturn(this, (MapPropsToContext.__proto__ || Object.getPrototypeOf(MapPropsToContext)).call(this));
+
+    _this2.state = _this2.buildState(props);
+    return _this2;
   }
 
-  _createClass(MapContextToProps, [{
+  _createClass(MapPropsToContext, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       this.setState(this.buildState(nextProps));
@@ -477,61 +529,7 @@ var MapContextToProps = function (_Component) {
   }, {
     key: 'buildState',
     value: function buildState(props) {
-      return { WrappedComponent: this.createWrappedComponent(props) };
-    }
-  }, {
-    key: 'createWrappedComponent',
-    value: function createWrappedComponent(props) {
-      var spec = props.childContextTypes || Object.keys(utils.omit(props, ['children', 'childContextTypes', 'contextNamespace']));
-      var keys = Object.keys((0, _contextTypes.normalize)(spec));
-
-      var WrappedComponent = function (_Component2) {
-        _inherits(WrappedComponent, _Component2);
-
-        function WrappedComponent(childProps) {
-          _classCallCheck(this, WrappedComponent);
-
-          var _this2 = _possibleConstructorReturn(this, (WrappedComponent.__proto__ || Object.getPrototypeOf(WrappedComponent)).call(this));
-
-          _this2.state = _this2.buildState(childProps);
-          return _this2;
-        }
-
-        _createClass(WrappedComponent, [{
-          key: 'componentWillReceiveProps',
-          value: function componentWillReceiveProps(nextChildProps) {
-            this.setState(this.buildState(nextChildProps));
-          }
-        }, {
-          key: 'buildState',
-          value: function buildState(childProps) {
-            return { childContextProps: utils.pick(childProps, keys) };
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            var children = this.props.children;
-            var childContextProps = this.state.childContextProps;
-
-
-            if (_react.Children.count(children) !== 1) {
-              if (!warnedChildCount) {
-                warnedChildCount = true;
-
-                console.warn('Must return exactly 1 child from MapContextToProps');
-              }
-
-              return null;
-            }
-
-            return (0, _react.cloneElement)(_react.Children.only(children), childContextProps);
-          }
-        }]);
-
-        return WrappedComponent;
-      }(_react.Component);
-
-      return (0, _context2.default)(spec, props.contextNamespace)(WrappedComponent);
+      return { WrappedComponent: createInnerComponent(props) };
     }
   }, {
     key: 'render',
@@ -543,10 +541,10 @@ var MapContextToProps = function (_Component) {
     }
   }]);
 
-  return MapContextToProps;
+  return MapPropsToContext;
 }(_react.Component);
 
-exports.default = MapContextToProps;
+exports.default = MapPropsToContext;
 
 /***/ },
 /* 7 */
@@ -558,7 +556,7 @@ exports.default = MapContextToProps;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MapContextToProps = exports.ContextProvider = exports.setContext = exports.context = undefined;
+exports.MapContextToProps = exports.MapPropsToContext = exports.setContext = exports.context = undefined;
 
 var _context2 = __webpack_require__(3);
 
@@ -568,11 +566,11 @@ var _setContext2 = __webpack_require__(4);
 
 var _setContext3 = _interopRequireDefault(_setContext2);
 
-var _ContextProvider2 = __webpack_require__(5);
+var _MapPropsToContext2 = __webpack_require__(6);
 
-var _ContextProvider3 = _interopRequireDefault(_ContextProvider2);
+var _MapPropsToContext3 = _interopRequireDefault(_MapPropsToContext2);
 
-var _MapContextToProps2 = __webpack_require__(6);
+var _MapContextToProps2 = __webpack_require__(5);
 
 var _MapContextToProps3 = _interopRequireDefault(_MapContextToProps2);
 
@@ -580,7 +578,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.context = _context3.default;
 exports.setContext = _setContext3.default;
-exports.ContextProvider = _ContextProvider3.default;
+exports.MapPropsToContext = _MapPropsToContext3.default;
 exports.MapContextToProps = _MapContextToProps3.default;
 
 /***/ }

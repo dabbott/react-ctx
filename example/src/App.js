@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-import { context, setContext, ContextProvider, MapContextToProps } from '../dist/react-context'
+import { context, setContext, MapPropsToContext, MapContextToProps } from '../dist/react-context'
 
 // textDecoration should apply, fontSize shouldn't
 const Text = context(
@@ -51,26 +51,26 @@ const Setter = setContext(['color'], 'namespace')(class extends Component {
 class App extends Component {
   render() {
     return (
-      <ContextProvider
+      <MapPropsToContext
         textDecoration={'underline'}
         childContextTypes={{textDecoration: PropTypes.string}}
         contextNamespace={'yolo'}
       >
-        <ContextProvider fontSize={100}>
+        <MapPropsToContext fontSize={100}>
           <Setter color={'teal'}>
             <Text>Hola</Text>
             <TextWithContextTypes>World</TextWithContextTypes>
-            <ContextProvider fontStyle={'italic'} contextNamespace={'foo'}>
+            <MapPropsToContext fontStyle={'italic'} contextNamespace={'foo'}>
               <MapContextToProps
                 childContextTypes={['fontStyle']}
                 contextNamespace={'foo'}
               >
                 <Text>Foo</Text>
               </MapContextToProps>
-            </ContextProvider>
+            </MapPropsToContext>
           </Setter>
-        </ContextProvider>
-      </ContextProvider>
+        </MapPropsToContext>
+      </MapPropsToContext>
     )
   }
 }
