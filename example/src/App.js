@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-import { context, setContext, MapPropsToContext, MapContextToProps } from '../dist/react-context-provider'
+import { context, setContext, MapPropsToContext, MapContextToProps } from '../dist/react-ctx'
 
 // textDecoration should apply, fontSize shouldn't
 const Text = context(

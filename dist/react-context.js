@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["react"], factory);
 	else if(typeof exports === 'object')
-		exports["react-context-provider"] = factory(require("react"));
+		exports["react-ctx"] = factory(require("react"));
 	else
-		root["react-context-provider"] = factory(root["React"]);
+		root["react-ctx"] = factory(root["React"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
