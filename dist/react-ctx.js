@@ -415,33 +415,32 @@ var createInnerComponent = function createInnerComponent(props) {
 var MapContextToProps = function (_Component2) {
   _inherits(MapContextToProps, _Component2);
 
-  function MapContextToProps(props) {
+  function MapContextToProps() {
+    var _ref;
+
+    var _temp, _this2, _ret;
+
     _classCallCheck(this, MapContextToProps);
 
-    var _this2 = _possibleConstructorReturn(this, (MapContextToProps.__proto__ || Object.getPrototypeOf(MapContextToProps)).call(this));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    _this2.state = _this2.buildState(props);
-    return _this2;
+    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref = MapContextToProps.__proto__ || Object.getPrototypeOf(MapContextToProps)).call.apply(_ref, [this].concat(args))), _this2), _this2.InnerComponent = createInnerComponent(_this2.props), _temp), _possibleConstructorReturn(_this2, _ret);
   }
 
   _createClass(MapContextToProps, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      this.setState(this.buildState(nextProps));
-    }
-  }, {
-    key: 'buildState',
-    value: function buildState(props) {
-      return { WrappedComponent: createInnerComponent(props) };
-    }
-  }, {
     key: 'render',
     value: function render() {
+      var InnerComponent = this.InnerComponent;
       var children = this.props.children;
-      var WrappedComponent = this.state.WrappedComponent;
 
 
-      return _react2.default.createElement(WrappedComponent, { children: children });
+      return _react2.default.createElement(
+        InnerComponent,
+        null,
+        children
+      );
     }
   }]);
 
@@ -513,32 +512,27 @@ var createInnerComponent = function createInnerComponent(props) {
 var MapPropsToContext = function (_Component2) {
   _inherits(MapPropsToContext, _Component2);
 
-  function MapPropsToContext(props) {
+  function MapPropsToContext() {
+    var _ref;
+
+    var _temp, _this2, _ret;
+
     _classCallCheck(this, MapPropsToContext);
 
-    var _this2 = _possibleConstructorReturn(this, (MapPropsToContext.__proto__ || Object.getPrototypeOf(MapPropsToContext)).call(this));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    _this2.state = _this2.buildState(props);
-    return _this2;
+    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref = MapPropsToContext.__proto__ || Object.getPrototypeOf(MapPropsToContext)).call.apply(_ref, [this].concat(args))), _this2), _this2.InnerComponent = createInnerComponent(_this2.props), _temp), _possibleConstructorReturn(_this2, _ret);
   }
 
   _createClass(MapPropsToContext, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      this.setState(this.buildState(nextProps));
-    }
-  }, {
-    key: 'buildState',
-    value: function buildState(props) {
-      return { WrappedComponent: createInnerComponent(props) };
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var WrappedComponent = this.state.WrappedComponent;
+      var InnerComponent = this.InnerComponent;
 
 
-      return _react2.default.createElement(WrappedComponent, this.props);
+      return _react2.default.createElement(InnerComponent, this.props);
     }
   }]);
 
