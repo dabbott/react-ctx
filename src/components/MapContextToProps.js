@@ -52,26 +52,16 @@ const createInnerComponent = (props) => {
 
 export default class MapContextToProps extends Component {
 
-  constructor(props) {
-    super()
-
-    this.state = this.buildState(props)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState(this.buildState(nextProps))
-  }
-
-  buildState(props) {
-    return {WrappedComponent: createInnerComponent(props)}
-  }
+  InnerComponent = createInnerComponent(this.props)
 
   render() {
+    const {InnerComponent} = this
     const {children} = this.props
-    const {WrappedComponent} = this.state
 
     return (
-      <WrappedComponent children={children} />
+      <InnerComponent>
+        {children}
+      </InnerComponent>
     )
   }
 }
